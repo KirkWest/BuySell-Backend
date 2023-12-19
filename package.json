@@ -1,10 +1,11 @@
 {
-  "name": "buysell-backend",
+  "name": "DaySaleBackend",
   "version": "1.0.0",
   "description": "The backend to a BuySell day app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
