@@ -1,5 +1,5 @@
 {
-  "name": "DaySaleBackend",
+  "name": "daysalebackend",
   "version": "1.0.0",
   "description": "The backend to a BuySell day app",
   "main": "index.js",
