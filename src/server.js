@@ -7,7 +7,7 @@ app.use(express.json());
 
 app.get("/", (request, response) => {
 	response.json({
-		message:"Testing connect"
+		message:"Testing connection"
 	});
 });
 
