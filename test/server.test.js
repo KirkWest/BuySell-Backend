@@ -15,3 +15,17 @@ describe('Server root route exists and returns test successful', () => {
     });
   });
 });
+
+describe('POST to root route posts message in body', () => {
+  test('POST request.body.message of "Post body test" returns received value of "Post body test"', async () => {
+     const response = await request(app)
+     .post("/")
+     .send({
+      message: "Post body test"
+     });
+
+     expect(response.body.received).toEqual("Post body test")
+
+
+    });
+});

@@ -5,6 +5,7 @@ const app = express();
 
 app.use(express.json());
 
+// routes to test the server before building out individual files
 app.get("/", (request, response) => {
 	response.json({
 		message:"Testing connection"
@@ -18,7 +19,7 @@ app.post("/", (request, response) => {
 });
 
 app.delete("/buy/:id", (request, response) => {
-	const resourceID = request.params.id;
+	const buyID = request.params.id;
 	response.json({
 		message:"DELETE request successful for ID $(buyID)"
 	});
