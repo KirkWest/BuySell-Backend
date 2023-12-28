@@ -1,5 +1,3 @@
-
-
 const CalendarEvent = require('../models/CalendarEvent');
 
 //controller to handle admin interactions with calendar
