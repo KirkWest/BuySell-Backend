@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+
+// Connects to cloud atlas mongo database
 async function databaseConnect(){
 	try { 
 		console.log("Connecting to:\n" + process.env.DB_URI);
