@@ -1,9 +1,8 @@
 const User = require('../models/User');
-const { hashPassword, comparePassword } = require('../functions/userAuthFunctions');
-const { generateToken } = require('../functions/userAuthFunctions');
+const { hashPassword, comparePassword, generateToken } = require('../functions/userAuthFunctions');
 
 // register new user
-exports.register = async (reg, res) => {
+exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
@@ -26,7 +25,7 @@ exports.register = async (reg, res) => {
     // this will save the new user to the database
     await newUser.save();
 
-    // generates a JWT token for a newUser
+    // generates a JWT token for a new user
     const token = generateToken(newUser);
 
     res.status(201).json({ message: "New user registration successful", token });
@@ -37,7 +36,7 @@ exports.register = async (reg, res) => {
 };
 
 // login for an existing user
-exports.login = async (reg, res) => {
+exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -61,4 +60,3 @@ exports.login = async (reg, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
