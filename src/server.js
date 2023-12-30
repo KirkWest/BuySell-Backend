@@ -1,4 +1,5 @@
 const express = require('express');
+const authRouter = require('./routes/authRouter');
 
 // make a server instance 
 const app = express();
