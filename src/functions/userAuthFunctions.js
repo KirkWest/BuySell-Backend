@@ -6,21 +6,25 @@ async function hashPassword(password) {
   return await bcrypt.hash(password, 10);
 }
  // compares the given password with a hashed password
-async function comparePassword(password, hashedPassword) {
-  return await bcrypt.compare(password, hashedPassword);
+async function comparePassword(plaintextPassword, hashedPassword) {
+  let doesPasswordMatch = false;
+  doesPasswordMatch = await bcrypt.compare(plaintextPassword, hashedPassword);
+  return doesPasswordMatch;
 }
 
 // generates a JWT token
-function generateToken(user) {
-  return jwt.sign({ 
-    userID: user._id,
-    username: user.username
-  }, process.env.JWT_SECRET, { expiresIn: '1h' })
+function generateJwt(userId) {
+  let newJwt = jwt.sign(
+    { userId },
+    process.env.JWT_KEY,
+    { expiresIn: "7d" }
+  );
+  return newJwt;
 }
 
 module.exports = {
   hashPassword,
   comparePassword,
-  generateToken,
+  generateJwt,
 };
 

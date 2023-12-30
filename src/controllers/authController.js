@@ -1,10 +1,15 @@
 const { User } = require('../models/User');
-const { hashPassword, comparePassword, generateToken } = require('../functions/userAuthFunctions');
+const { hashPassword, comparePassword, generateJwt } = require('../functions/userAuthFunctions');
 
 // register new user
 exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+
+    // Validate user input
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "Please provide valid username, email, and password" });
+    }
 
     // checks if username or email is used already
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
@@ -26,7 +31,7 @@ exports.register = async (req, res) => {
     await newUser.save();
 
     // generates a JWT token for a new user
-    const token = generateToken(newUser);
+    const token = generateJwt(newUser._id);
 
     res.status(201).json({ message: "New user registration successful", token });
   } catch (error) {
@@ -40,6 +45,11 @@ exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    // validates the username and password
+    if (!username || !password) {
+      return res.status(400).json({ message: "Please provide valid username and password" });
+    }
+
     // finds the user using the username
     const user = await User.findOne({ username });
     if (!user) {
@@ -52,7 +62,7 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid input" });
     }
 
-    const token = generateToken(user);
+    const token = generateJwt(user._id);
 
     res.json({ message: "Login successful", token });
   } catch (error) {
