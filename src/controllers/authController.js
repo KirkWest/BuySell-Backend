@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const { User } = require('../models/User');
 const { hashPassword, comparePassword, generateToken } = require('../functions/userAuthFunctions');
 
 // register new user

@@ -1,5 +1,5 @@
 require('dotenv').config();
-const User = require('./models/User');
+const { User } = require('./models/User');
 const { databaseConnect } = require('./database');
 
 // added in a wait for connection
