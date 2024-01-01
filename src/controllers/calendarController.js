@@ -1,61 +1,73 @@
-const CalendarEvent = require('../models/CalendarEvent');
+const { CalendarEvent } = require('../models/CalendarEvent');
 const { authenticateToken } = require('../middleware/authMiddleware');
 
-// Adds a new buy button to calendar
-exports.addEvent = async (req, res) => {
-  const {date} = req.body;
+// Toggles event type (buy/sell)
+exports.toggleEventType = async (req, res) => {
+  const { date } = req.body;
 
   try {
-    const calendarEvent = await CalendarEvent.findOne({date});
-    if(!calendarEvent) {
+    const event = await CalendarEvent.findOne({date});
+
+    if (!event) {
       return res.status(404).json({
         message: "Event not found"
       });
     }
 
-    // Checks authentication
-    authenticateToken(req, res, async () => {
-      calendarEvent.hasBuyButton = true;
+    // toggle buy sell button
+    event.eventType = event.eventType === "buy" ? "sell" : "buy";
+    await event.save();
 
-      await calendarEvent.save();
-
-      res.json({
-        message: "Event added successfully"
-      });
+    res.json({
+      message: "toggle successful"
     });
   } catch (error) {
     console.error(error);
-    res.staus(500).json({
+    res.status(500).json({
       message: "Internal Server Error"
     });
   }
 };
 
-// Deletes a buy button
-exports.deleteEvent = async (req, res) => {
-  const {date} = req.body;
+// manages child names in database
+exports.manageChildNames = async (req, res) => {
+  const {date, action, childName} = req.body;
 
   try {
-    const calendarEvent = await CalendarEvent.findOne({date});
-    if(!calendarEvent) {
+    const event = await CalendarEvent.findOne({date});
+
+    if (!event) {
       return res.status(404).json({
         message: "Event not found"
       });
     }
 
-    // Checks authentication
-    authenticateToken(req, res, async () => {
-      calendarEvent.hasBuyButton = false;
+    //checks authentication
+    const handleEvent = async () => {
+      if (action === "add") {
+        // Add child's name to array
+        event.childNames.push(childName);
+      } else if (action === "remove") {
+        // Removes a child from the array
+        event.childNames = event.childNames.filter((name) => name !== childName);
+      }
 
-      await calendarEvent.save();
+      //If there are no children it will switch back to "sell"
+      if (event.childNames.length === 0) {
+        event.eventType = "sell";
+      }
+
+      await event.save();
 
       res.json({
-        message: "Event deleted successfully"
+        message: "Childs name saved successfully"
       });
-    });
+    };
+
+    authenticateToken(req, res, handleEvent);
   } catch (error) {
     console.error(error);
-    res.staus(500).json({
+    res.status(500).json({
       message: "Internal Server Error"
     });
   }

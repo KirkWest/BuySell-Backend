@@ -7,13 +7,14 @@ const CalendarEventSchema = new Schema({
     type: Date,
     required: true,
   },
-  description: {
-    type: String,
-    required: true,
+  childNames: {
+    type: [String],
+    default: [],
   },
-  hasBuyButton: {
-    type: Boolean,
-    default: false,
+  eventType: {
+    type: String,
+    enum: ["buy", "sell"],
+    default: "sell",
   },
 });
 

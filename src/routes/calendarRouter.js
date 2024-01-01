@@ -3,10 +3,10 @@ const router = express.Router();
 const calendarController = require('../controllers/calendarController');
 const { authenticateToken } = require('../middleware/authMiddleware')
 
-// Route for adding a buy button requiring authentication
-router.post('/addEvent', authenticateToken, calendarController.addEvent);
+// Route toggling event type (buy/sell) with authentication
+router.post('/toggleEventType', authenticateToken, calendarController.toggleEventType);
 
-// Route for deleting a buy button requiring authentication
-router.delete('/deleteEvent/:eventId', authenticateToken, calendarController.deleteEvent);
+// Route managing kids in the database with authentication
+router.post('/manageChildNames', authenticateToken, calendarController.manageChildNames);
 
 module.exports = router;
