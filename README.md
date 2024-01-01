@@ -25,3 +25,7 @@ Defines the Mongoose schema for CalendarEvent showing events on the calendar ("b
 ## src/models/User.js
 
 Defines the mongoose schema for User, this is the account holder, as of initial build only the admins will have a schema, there is potential to add in parents as users at a later date. Contains properties of username, email, password, and isAdmin. all passwords are hashed before saving and contains a function to compare the passwords during login.
+
+## src/middleware/authMiddleware.js
+
+authenticateToken will check if the request has a valid jwt token. If it is valis it will decode the token, finds the user, and attaches the user object to the request.

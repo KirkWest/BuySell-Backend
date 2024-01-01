@@ -1,4 +1,5 @@
 const CalendarEvent = require('../models/CalendarEvent');
+const { authenticateToken } = require('../middleware/authMiddleware');
 
 //controller to handle admin interactions with calendar
 exports.addRemoveBuyButton = async (req, res) => {
@@ -13,6 +14,9 @@ exports.addRemoveBuyButton = async (req, res) => {
       });
     }
 
+    const authenticatedUser = req.user;
+    console.log('Authenticated User:', authenticatedUser);
+
     if (action === 'addBuyButton') {
       calendarEvent.hashBuyButton = true;
     } else if (action === 'removeBuyButton') {
@@ -22,12 +26,12 @@ exports.addRemoveBuyButton = async (req, res) => {
     await calendarEvent.save();
 
     res.json({
-      message: 'save succesfull'
+      message: "save succesfull"
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: "Internal Server Error"
     });
   }
 };
