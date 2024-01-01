@@ -32,7 +32,7 @@ exports.addEvent = async (req, res) => {
 };
 
 // Deletes a buy button
-exports.addEvent = async (req, res) => {
+exports.deleteEvent = async (req, res) => {
   const {date} = req.body;
 
   try {

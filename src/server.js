@@ -1,6 +1,6 @@
 const express = require('express');
 const authRouter = require('./routes/authRouter');
-const calendarRouter = requrie('./routes/calendarRouter.js')
+const calendarRouter = require('./routes/calendarRouter.js')
 
 // make a server instance 
 const app = express();
