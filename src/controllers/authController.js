@@ -8,13 +8,24 @@ exports.register = async (req, res) => {
 
     // Validate user input
     if (!username || !email || !password) {
-      return res.status(400).json({ message: "Please provide valid username, email, and password" });
+      return res.status(400).json({ message: "Please provide username, email, and password" });
+    }
+
+    // validation for email formatting
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Please provide a valid email address" });
     }
 
     // checks if username or email is used already
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
       return res.status(400).json({ message: "Sorry that username or email is already being used"});
+    }
+
+    // validates the password is larger than < 8
+    if (password.length < 8) {
+      return res.status(400).json({ message: "Password must be 8 or more characters"})
     }
 
     // this will hash the password

@@ -1,9 +1,9 @@
 const CalendarEvent = require('../models/CalendarEvent');
 const { authenticateToken } = require('../middleware/authMiddleware');
 
-//controller to handle admin interactions with calendar
-exports.addRemoveBuyButton = async (req, res) => {
-  // grabs the date and action from body
+// controller to handle admin interactions with calendar
+exports.addRemoveBuyButton = async (req, res,) => {
+  // Grabs the date and action the body
   const {date, action} = req.body;
 
   try {
@@ -14,19 +14,22 @@ exports.addRemoveBuyButton = async (req, res) => {
       });
     }
 
-    const authenticatedUser = req.user;
-    console.log('Authenticated User:', authenticatedUser);
+    // Check authentication using the middleware
+    authenticateToken(req, res, async () => {
+      const authenticatedUser = req.user;
+      console.log('Authenticated User:', authenticatedUser);
 
-    if (action === 'addBuyButton') {
-      calendarEvent.hashBuyButton = true;
-    } else if (action === 'removeBuyButton') {
-      calendarEvent.hasBuyButton = false;
-    }
+      if (action === 'addBuyButton') {
+        calendarEvent.hashBuyButton = true;
+      } else if (action === 'removeBuyButton') {
+        calendarEvent.hasBuyButton = false;
+      }
 
-    await calendarEvent.save();
+      await calendarEvent.save();
 
-    res.json({
-      message: "save succesfull"
+      res.json({
+        message: "Save successful"
+      });
     });
   } catch (error) {
     console.error(error);
