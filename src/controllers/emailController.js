@@ -14,10 +14,10 @@ exports.sendGuestEmail = async (req, res) => {
   const emailBody = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
 
   constOptions = {
-    from: email,
+    from: email, // guests email address
     to: process.env.ADMIN_EMAIL, // UserAdmin email
-    subject: subject,
-    text: emailBody
+    subject: subject, // will auto fill buy or sell
+    text: emailBody // guest to infill the required information
   };
 
   await sendEmail(emailOptions);
