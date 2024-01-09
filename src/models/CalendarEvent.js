@@ -6,15 +6,11 @@ const CalendarEventSchema = new Schema({
   date: {
     type: Date,
     required: true,
+    unique: true,
   },
   childNames: {
     type: [String],
     default: [],
-  },
-  eventType: {
-    type: String,
-    enum: ["buy", "sell"],
-    default: "sell",
   },
 });
 

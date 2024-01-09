@@ -1,25 +1,31 @@
 const { CalendarEvent } = require('../models/CalendarEvent');
-const { authenticateToken } = require('../middleware/authMiddleware');
 
-// Toggles event type (buy/sell)
-exports.toggleEventType = async (req, res) => {
-  const { date } = req.body;
+// manages child names in database
+exports.manageChildNames = async (req, res) => {
+  const {date, action, childName} = req.body;
 
   try {
-    const event = await CalendarEvent.findOne({date});
+    let event = await CalendarEvent.findOne({date});
 
-    if (!event) {
-      return res.status(404).json({
-        message: "Event not found"
-      });
+    if (action == "add") {
+      if (!event) {
+        event = new CalendarEvent({ date, childNames: [childName] });
+      } else {
+        event.childNames.push(childName);
+      }
+    } else if (action === "remove") {
+      event.childNames = event.childNames.filter(name => name !== childName);
+      if (event.childNames.length == 0) {
+        await CalendarEvent.deleteOne({ _id: event._id });
+        return res.json({
+          message: "Successfully removed child"
+        });
+      }
     }
 
-    // toggle buy sell button
-    event.eventType = event.eventType === "buy" ? "sell" : "buy";
     await event.save();
-
     res.json({
-      message: "toggle successful"
+      message: "Day updated successfully"
     });
   } catch (error) {
     console.error(error);
@@ -27,44 +33,13 @@ exports.toggleEventType = async (req, res) => {
       message: "Internal Server Error"
     });
   }
-};
+}
 
-// manages child names in database
-exports.manageChildNames = async (req, res) => {
-  const {date, action, childName} = req.body;
-
+// this will fetch from the database only when a buy button is active
+exports.getEvents = async (req, res) => {
   try {
-    const event = await CalendarEvent.findOne({date});
-
-    if (!event) {
-      return res.status(404).json({
-        message: "Event not found"
-      });
-    }
-
-    //checks authentication
-    const handleEvent = async () => {
-      if (action === "add") {
-        // Add child's name to array
-        event.childNames.push(childName);
-      } else if (action === "remove") {
-        // Removes a child from the array
-        event.childNames = event.childNames.filter((name) => name !== childName);
-      }
-
-      //If there are no children it will switch back to "sell"
-      if (event.childNames.length === 0) {
-        event.eventType = "sell";
-      }
-
-      await event.save();
-
-      res.json({
-        message: "Childs name saved successfully"
-      });
-    };
-
-    authenticateToken(req, res, handleEvent);
+    const events = await CalendarEvent.find({});
+    res.json(events);
   } catch (error) {
     console.error(error);
     res.status(500).json({
