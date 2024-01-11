@@ -16,16 +16,37 @@ Contains routes to test our initial database with basic routes.
 
 ## src/controllers/calendarController.js
 
-Contains a controller method for admin to interact with the calendar called "addRemoveBuyButton". It also updates the "hasBuyButton" property of the calendar based on the action.
+Contains a controller method for admin to interact with the calendar called manageChildNames, this allowd the admin to add more child names to the array set for a particular day as well as update and remove names, if there are no names left in the array it will delete the event from the database.
 
 ## src/models/CalendarEvent.js
 
-Defines the Mongoose schema for CalendarEvent showing events on the calendar ("buy button"). Contains properties of date, description, and hasBuyButton.
+Defines the Mongoose schema for CalendarEvent, these involve simply date(this is taken from the day seleted on the calendar), and the childNames which is set to an array so it can hold multiple children or just one.
 
 ## src/models/User.js
 
-Defines the mongoose schema for User, this is the account holder, as of initial build only the admins will have a schema, there is potential to add in parents as users at a later date. Contains properties of username, email, password, and isAdmin. all passwords are hashed before saving and contains a function to compare the passwords during login.
+Defines the mongoose schema for User, this is the account holder, as of initial build only the admins will have a schema, there is potential to add in parents as users at a later date. Contains properties of username, email, password, and isAdmin(this is set to default for now but can be changed at a later date if non admin users are added into the model and app). All passwords are hashed before saving and contains a function to compare the passwords during login.
 
 ## src/middleware/authMiddleware.js
 
-authenticateToken will check if the request has a valid jwt token. If it is valis it will decode the token, finds the user, and attaches the user object to the request.
+AuthenticateToken will check if the request has a valid jwt token from the Authorization header. If it is valid it will decode the token, finds the user, and attaches the user object to the request.
+
+## src/controllers/authController.js
+
+### Registration
+
+- Checks if the user has infilled all fields, username, email, and password with validation
+- Regex for email format and also checks for existing users
+- Password hashing and user creation handling
+- Generates and returns the JWT if successfully registered
+
+### Login
+
+- Validation for username and password
+- Checks for username and password in database
+- Generates JWT if successfully logs in
+- Error handling with responses
+
+## src/functions/userAuthFunctions.js
+
+This contains the functions for using bcryptjs for hashing our password and also comparing it to the saved password in the database.
+It also contains a functions to generate JWT using jsonwebtoken with an expiry date of 7 days.
