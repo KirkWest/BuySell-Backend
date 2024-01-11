@@ -6,6 +6,9 @@ const emailRouter = require('./routes/emailRouter.js');
 // make a server instance 
 const app = express();
 
+const cors = require('cors');
+app.use(cors());
+
 app.use(express.json());
 
 // authentication route
