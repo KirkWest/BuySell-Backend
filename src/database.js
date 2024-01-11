@@ -6,7 +6,7 @@ async function databaseConnect(){
 	try { 
 		console.log("Connecting to:\n" + process.env.DB_URI);
 		await mongoose.connect(process.env.DB_URI, {
-			dbName: 'DaySaleDB',
+			dbName: 'DaySale',
 		});
 		console.log("Database connected");
 	} catch (error) {
