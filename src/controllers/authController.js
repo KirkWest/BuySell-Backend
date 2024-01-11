@@ -63,16 +63,19 @@ exports.login = async (req, res) => {
 
     // finds the user using the username
     const user = await User.findOne({ username });
+    // added logging to find issue
+    console.log(user ? `User found: ${user.username}` : "No user found with this username");
     if (!user) {
       return res.status(401).json({ message: "Invalid input" });
     }
 
     // compares password to the stored hashed password
     const isPasswordMatch = await comparePassword(password, user.password);
+
+    // compares password to the stored hashed password
     if (!isPasswordMatch) {
       return res.status(401).json({ message: "Invalid input" });
     }
-
     const token = generateJwt(user._id);
 
     res.json({ message: "Login successful", token });
