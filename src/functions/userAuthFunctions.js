@@ -6,9 +6,9 @@ async function hashPassword(password) {
   return await bcrypt.hash(password, 10);
 }
  // compares the given password with a hashed password
- async function comparePassword(plaintextPassword, hashedPassword) {
-  const doesPasswordMatch = await bcrypt.compare(plaintextPassword, hashedPassword);
-  console.log("Password comparison result:", doesPasswordMatch);
+async function comparePassword(plaintextPassword, hashedPassword) {
+  let doesPasswordMatch = false;
+  doesPasswordMatch = await bcrypt.compare(plaintextPassword, hashedPassword);
   return doesPasswordMatch;
 }
 
