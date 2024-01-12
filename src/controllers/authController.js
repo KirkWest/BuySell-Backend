@@ -75,7 +75,7 @@ exports.login = async (req, res) => {
 
     // compares password to the stored hashed password
     console.log('password and user password >>>>>', { doesTestCompare, password, userPassword: user.password })
-    const isPasswordMatch = comparePassword(password, user.password);
+    const isPasswordMatch = comparePassword(password.toString(), user.password);
     if (!isPasswordMatch) {
       return res.status(401).json({ message: "Invalid input" });
     }
