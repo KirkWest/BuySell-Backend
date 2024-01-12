@@ -2,15 +2,26 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 // hashes the password using bcrypt
-function hashPassword(password) {
-  const hash = bcrypt.hashSync(password, 10);
-  return hash;
+async function hashPassword(password) {
+  // const hash = bcrypt.hashSync(password, 10);
+  try {
+    const hash = await bcrypt.hash('bacon', 8);
+    return hash;
+  } catch(e) {
+    console.error(`Error creating hash: ${e}`)
+  }
 }
  // compares the given password with a hashed password
-function comparePassword(plaintextPassword, hashedPassword) {
-  const doesPasswordMatch = bcrypt.compareSync(plaintextPassword, hashedPassword);
-  console.log('log password compare >>>>>', { plaintextPassword, hashedPassword, doesPasswordMatch })
-  return doesPasswordMatch;
+async function comparePassword(plaintextPassword, hashedPassword) {
+  // const doesPasswordMatch = bcrypt.compareSync(plaintextPassword, hashedPassword);
+  // As of bcryptjs 2.4.0, compare returns a promise if callback is omitted:
+  try {
+    const doesPasswordMatch = bcrypt.compare(plaintextPassword, hashedPassword);
+    console.log('log password compare >>>>>', { plaintextPassword, hashedPassword, doesPasswordMatch })
+    return doesPasswordMatch;
+  } catch(e) {
+    console.error(`Error matching password: ${e}`)
+  }
 }
 
 // generates a JWT token

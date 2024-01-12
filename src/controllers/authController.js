@@ -31,7 +31,8 @@ exports.register = async (req, res) => {
     }
 
     // this will hash the password using the userAuthFunctions.js hashPassword function
-    const hashedPassword = hashPassword(password);
+    const hashedPassword = await hashPassword(password);
+    console.log('hashed password >>>>>', { hashedPassword });
 
     // this will create a new user
     const newUser = new User({
@@ -70,12 +71,8 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid input" });
     }
 
-    const hash = bcrypt.hashSync(password, 10);
-    const doesTestCompare = bcrypt.compareSync(password, hash);
-
-    // compares password to the stored hashed password
-    console.log('password and user password >>>>>', { doesTestCompare, password, userPassword: user.password })
-    const isPasswordMatch = comparePassword(password.toString(), user.password);
+    const isPasswordMatch = await comparePassword(password, user.password);
+    console.log('is password match >>>>>', { isPasswordMatch });
     if (!isPasswordMatch) {
       return res.status(401).json({ message: "Invalid input" });
     }
