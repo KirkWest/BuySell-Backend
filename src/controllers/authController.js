@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const { User } = require('../models/User');
 const { hashPassword, comparePassword, generateJwt } = require('../functions/userAuthFunctions');
 
@@ -67,9 +69,11 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid input" });
     }
 
+    const hash = bcrypt.hashSync(password, 10);
+
     // compares password to the stored hashed password
-    console.log('password and user password >>>>>', { password, userPassword: user.password })
-    const isPasswordMatch = await comparePassword(password, user.password);
+    console.log('password and user password >>>>>', { hash, password, userPassword: user.password })
+    const isPasswordMatch = comparePassword(password, user.password);
     if (!isPasswordMatch) {
       return res.status(401).json({ message: "Invalid input" });
     }
