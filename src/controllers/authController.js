@@ -28,7 +28,7 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: "Password must be 8 or more characters"})
     }
 
-    // this will hash the password
+    // this will hash the password using the userAuthFunctions.js hashPassword function
     const hashedPassword = await hashPassword(password);
 
     // this will create a new user
