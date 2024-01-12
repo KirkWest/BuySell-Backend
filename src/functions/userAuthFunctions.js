@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 async function hashPassword(password) {
   // const hash = bcrypt.hashSync(password, 10);
   try {
-    const hash = await bcrypt.hash('bacon', 8);
+    const hash = await bcrypt.hash(password, 8);
     return hash;
   } catch(e) {
     console.error(`Error creating hash: ${e}`)

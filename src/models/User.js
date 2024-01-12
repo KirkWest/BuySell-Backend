@@ -37,9 +37,9 @@ const UserSchema = new Schema({
 //   next();
 // });
 
-UserSchema.methods.comparePassword = async function (password) {
-  return await comparePassword(password, this.password);
-};
+// UserSchema.methods.comparePassword = async function (password) {
+//   return await comparePassword(password, this.password);
+// };
 
 const User = mongoose.model('User', UserSchema);
 
