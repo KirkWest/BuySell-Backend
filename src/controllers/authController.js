@@ -29,7 +29,7 @@ exports.register = async (req, res) => {
     }
 
     // this will hash the password using the userAuthFunctions.js hashPassword function
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = hashPassword(password);
 
     // this will create a new user
     const newUser = new User({
@@ -68,6 +68,7 @@ exports.login = async (req, res) => {
     }
 
     // compares password to the stored hashed password
+    console.log('password and user password >>>>>', { password, userPassword: user.password })
     const isPasswordMatch = await comparePassword(password, user.password);
     if (!isPasswordMatch) {
       return res.status(401).json({ message: "Invalid input" });
