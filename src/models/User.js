@@ -29,13 +29,13 @@ const UserSchema = new Schema({
 });
 
 // this will hash the password before saving to our database using userAuthFunctions.js
-UserSchema.pre('save', async function (next) {
-  const user = this;
-  if (!user.isModified('password')) return next();
-  const hash = await hashPassword(this.password);
-  this.password = hash;
-  next();
-});
+// UserSchema.pre('save', async function (next) {
+//   const user = this;
+//   if (!user.isModified('password')) return next();
+//   const hash = await hashPassword(this.password);
+//   this.password = hash;
+//   next();
+// });
 
 UserSchema.methods.comparePassword = async function (password) {
   return await comparePassword(password, this.password);
