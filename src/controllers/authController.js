@@ -70,9 +70,10 @@ exports.login = async (req, res) => {
     }
 
     const hash = bcrypt.hashSync(password, 10);
+    const doesTestCompare = bcrypt.compareSync(password, hash);
 
     // compares password to the stored hashed password
-    console.log('password and user password >>>>>', { hash, password, userPassword: user.password })
+    console.log('password and user password >>>>>', { doesTestCompare, password, userPassword: user.password })
     const isPasswordMatch = comparePassword(password, user.password);
     if (!isPasswordMatch) {
       return res.status(401).json({ message: "Invalid input" });
