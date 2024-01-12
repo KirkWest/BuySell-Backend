@@ -40,6 +40,7 @@ exports.register = async (req, res) => {
       password: hashedPassword,
     });
 
+    console.log('password, hashedPassword >>>>>', { password, hashedPassword, newUser })
     // this will save the new user to the database
     await newUser.save();
 
