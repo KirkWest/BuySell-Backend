@@ -41,7 +41,6 @@ exports.register = async (req, res) => {
       password: hashedPassword,
     });
 
-    console.log('password, hashedPassword >>>>>', { password, hashedPassword, newUser })
     // this will save the new user to the database
     await newUser.save();
 
@@ -72,7 +71,6 @@ exports.login = async (req, res) => {
     }
 
     const isPasswordMatch = await comparePassword(password, user.password);
-    console.log('is password match >>>>>', { isPasswordMatch });
     if (!isPasswordMatch) {
       return res.status(401).json({ message: "Invalid input" });
     }
