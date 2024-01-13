@@ -25,7 +25,7 @@ function generateJwt(userId) {
   let newJwt = jwt.sign(
     { userId },
     process.env.JWT_KEY,
-    { expiresIn: "1d" }
+    { expiresIn: "4h" }
   );
   return newJwt;
 }
