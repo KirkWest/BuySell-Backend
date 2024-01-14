@@ -3,6 +3,10 @@
 The backend to the daysale day app using the MERN stack.
 Its purpose of this is to handle the database interation, authentication, and processing of the data as well as our api end points.
 
+## database
+
+The data for the the app is held in MongoDB Atlas cloud server.
+
 ## list of dependencies
 
   "dependencies": {
