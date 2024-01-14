@@ -8,6 +8,6 @@ router.post('/manageChildNames', authenticateToken, calendarController.manageChi
 
 router.get('/events', authenticateToken, calendarController.getEvents);
 
-router.get('/events-available', calendarController.getAvailableEvents);
+router.get('/eventsAvailable', calendarController.getAvailableEvents);
 
 module.exports = router;
