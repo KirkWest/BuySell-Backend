@@ -1,11 +1,11 @@
 # BuySell-Backend
 
 The backend to the daysale day app using the MERN stack.
-Its purpose of this is to handle the database interation, authentication, and processing of the data as well as our api end points.
+Its purpose of this is to handle the database interation, authentication, and processing of the data as well as our api end points for a buying selling days app connecting with the front end here [Front end link](https://github.com/KirkWest/day-sale)
 
 ## database
 
-The data for the the app is held in MongoDB Atlas cloud server.
+The data for the the app is held in MongoDB Atlas cloud server as per the calendarEvent model schema.
 
 ## list of dependencies
 
