@@ -69,6 +69,7 @@ exports.getAvailableEvents = async (req, res) => {
       console.log('event >>>>>', { event })
       return ({
       ...event,
+      childNames: [],
     })});
 
     res.json(eventsWithoutNames);
