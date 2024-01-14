@@ -73,10 +73,6 @@ AuthenticateToken will check if the request has a valid jwt token from the Autho
 This contains the functions for using bcryptjs for hashing our password and also comparing it to the saved password in the database.
 It also contains a functions to generate JWT using jsonwebtoken with an expiry date of 4hrs set.
 
-## src/middleware/authMiddleware.js
-
-In here we have the authenticateToken function, this is used to check if the user has an athentication token (JWT). It checks the JWT_KEY saved off in the .env file.
-
 ## src/routes/authRouter.js
 
 Contains the api endpoints for authorisation purposes, registration and logging in.
