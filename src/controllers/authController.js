@@ -1,5 +1,3 @@
-const bcrypt = require('bcryptjs');
-
 const { User } = require('../models/User');
 const { hashPassword, comparePassword, generateJwt } = require('../functions/userAuthFunctions');
 
