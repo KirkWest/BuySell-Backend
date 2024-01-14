@@ -63,6 +63,7 @@ exports.getEvents = async (req, res) => {
 
 exports.getAvailableEvents = async (req, res) => {
   try {
+    console.log('are you even trying >>>>', { req, res });
     const events = await CalendarEvent.find({});
     console.log('calendar event find >>>>>', { events })
     res.json(Boolean(events));
