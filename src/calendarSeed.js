@@ -4,17 +4,16 @@ const { databaseConnect } = require('./database');
 
 const seedData = [
   {
-    date: new Date('2024-01-01'),
+    date: new Date('2024-01-19'),
     childNames: ['Child1', 'Child2'],
     eventType: 'sell',
   },
-  // Add more CalendarEvent objects as needed
+
 ];
 
 // Wait for the database connection before proceeding
 databaseConnect()
   .then(() => {
-    // Insert the seed data into the CalendarEvent collection
     return CalendarEvent.insertMany(seedData);
   })
   .then((events) => {

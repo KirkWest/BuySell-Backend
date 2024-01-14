@@ -60,3 +60,16 @@ exports.getEvents = async (req, res) => {
     });
   }
 };
+
+exports.getAvailableEvents = async (req, res) => {
+  try {
+    const events = await CalendarEvent.find({});
+    console.log('calendar event find >>>>>', { events })
+    res.json(Boolean(events));
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Internal Server Error"
+    });
+  }
+};
