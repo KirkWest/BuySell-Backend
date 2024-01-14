@@ -65,14 +65,14 @@ exports.getAvailableEvents = async (req, res) => {
   try {
     const events = await CalendarEvent.find({});
 
-    const eventsWithoutNames = events.map((event) => {
+    const eventsWithoutNames = events.map((evnt) => {
       const newEvent = {
-        ...event,
+        ...evnt,
         childNames: [],
       };
-      console.log('event >>>>>', { event, newEvent });
+      console.log('event >>>>>', { evnt, newEvent });
       return ({
-      ...event,
+      evnt,
       childNames: [],
     })});
 
