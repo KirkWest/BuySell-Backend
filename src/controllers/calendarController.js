@@ -63,20 +63,9 @@ exports.getEvents = async (req, res) => {
 
 exports.getAvailableEvents = async (req, res) => {
   try {
-    const events = await CalendarEvent.find({});
+    const events = await CalendarEvent.find({}).select('-childNames');
 
-    const eventsWithoutNames = events.map((evnt) => {
-      const newEvent = {
-        ...evnt,
-        childNames: [],
-      };
-      console.log('event >>>>>', { evnt, newEvent });
-      return ({
-      evnt,
-      childNames: [],
-    })});
-
-    res.json(eventsWithoutNames);
+    res.json(events);
   } catch (error) {
     console.error(error);
     res.status(500).json({
